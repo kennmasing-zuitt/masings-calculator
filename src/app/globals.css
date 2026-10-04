@@ -1,0 +1,114 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* ---------- Mobile first: everything stacked ---------- */
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.calculator {
+  background: #1e293b;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 0.35);
+}
+
+.display {
+  text-align: right;
+  padding: 16px 8px 24px;
+  overflow-wrap: anywhere;
+}
+.display__previous {
+  min-height: 1.5rem;
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+.display__current {
+  font-size: clamp(2.5rem, 12vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.key {
+  min-height: 64px; /* big enough for thumbs */
+  border: none;
+  border-radius: 16px;
+  font-size: 1.5rem;
+  background: #334155;
+  color: inherit;
+  cursor: pointer;
+  transition: filter 0.1s, transform 0.05s;
+}
+.key:hover { filter: brightness(1.15); }
+.key:active { transform: scale(0.96); }
+
+.key--zero { grid-column: span 2; }
+.key--clear { grid-column: span 3; background: #ef4444; font-size: 1.25rem; }
+.key--operator { background: #f59e0b; color: #1e293b; }
+.key--equals { background: #22c55e; color: #1e293b; }
+
+.history {
+  background: #1e293b;
+  border-radius: 24px;
+  padding: 16px 20px;
+}
+.history__title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+.history__empty { color: #64748b; margin: 0; }
+.history__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 50dvh;
+  overflow-y: auto;
+}
+.history__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #334155;
+}
+.history__item:last-child { border-bottom: none; }
+.history__expression { color: #94a3b8; overflow-wrap: anywhere; }
+.history__result { font-weight: 600; }
+
+/* ---------- Tablets & desktops: side by side ---------- */
+@media (min-width: 768px) {
+  .app {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 860px;
+    padding: 48px 24px;
+  }
+  .calculator { flex: 0 0 380px; }
+  .history { flex: 1; min-height: 100%; }
+  .history__list { max-height: 480px; }
+}

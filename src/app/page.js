@@ -1,0 +1,18 @@
+import Display from '@/components/Display'
+import Keypad from '@/components/Keypad'
+import History from '@/components/History'
+import PbbBbkKeypad from '@/components/PbbBbkKeypad'
+
+export default function Home() {
+  return (
+    <main className="app">
+      <section className="calculator" aria-label="Calculator">
+        <Display />
+        {/* <Keypad /> */}
+        <br/>
+        <PbbBbkKeypad />
+      </section>
+      <History />
+    </main>
+  )
+}
