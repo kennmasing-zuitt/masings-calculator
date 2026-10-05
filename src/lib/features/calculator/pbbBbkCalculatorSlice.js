@@ -98,6 +98,12 @@ const pbbBbkCalculatorSlice = createSlice({
         const productKey = state.current?.key ?? state.current
         const product = products.find((p) => p.key === productKey);
 
+        if (quantity === 0) {
+            const index = state.history.findIndex((h) => h.product === productKey);
+            state.history.splice(index, 1)
+            return
+        }
+
         if (!productKey || !quantity) {
           console.warn('submitPressed skipped:', { productKey, quantity })
           return

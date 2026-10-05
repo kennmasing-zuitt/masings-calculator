@@ -3,35 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: redux-calculator-next:latest
-    container_name: redux-calculator-next
+    image: masings-calculator:latest
+    container_name: masings-calculator
     restart: unless-stopped
     environment:
       NODE_ENV: production
-    expose:
-      - "3000"          # only reachable by nginx, not from outside
+    # no "ports:" - the Nginx container reaches it over the web network
     networks:
-      - web
-
-  nginx:
-    image: nginx:1.27-alpine
-    container_name: redux-calculator-nginx
-    restart: unless-stopped
-    depends_on:
-      app:
-        condition: service_healthy
-    ports:
-      - "${HOST_PORT:-80}:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-    networks:
-      - web
+      default:
+      web:
+        aliases: [masings-calculator]
 
 networks:
   web:
-    driver: bridge
+    external: true                 # shared with the Nginx proxy
