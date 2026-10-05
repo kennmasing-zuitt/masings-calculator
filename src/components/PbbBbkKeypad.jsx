@@ -1,54 +1,55 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 import {
-  productPressed,
-  operatorPressed,
-  equalsPressed,
-  clearPressed,
-} from '@/lib/features/calculator/pbbBbkCalculatorSlice'
-import { Col, Row, Button } from 'antd';
-import NumberModal from './Modal';
+    productPressed,
+    operatorPressed,
+    equalsPressed,
+    clearPressed,
+} from "@/lib/features/calculator/pbbBbkCalculatorSlice";
+import { Col, Row, Button } from "antd";
+import NumberModal from "./Modal";
+import { useDispatch } from "react-redux";
 
 const products = [
-  {
-    key: "pbbRegWhite",
-    label: "PBB Reg White"
-  },
-  {
-    key: "pbbSpecWhite",
-    label: "PBB Spec White"
-  },
-  {
-    key: "pbbRegMusco",
-    label: "PBB Reg Musco"
-  },
-  {
-    key: "pbbSpecMusco",
-    label: "PBB Spec Musco"
-  },
-  {
-    key: "bibingka",
-    label: "Bibingka"
-  },
-  {
-    key: "pbbOverload",
-    label: "PBB Overload"
-  },
-  {
-    key: "addCheese",
-    label: "Add Cheese"
-  },
-  {
-    key: "addMilk",
-    label: "Add Milk"
-  },
-  {
-    key: "addNiyog",
-    label: "Add Niyoge"
-  },
-]
+    {
+        key: "pbbRegWhite",
+        label: "PBB Reg (White)",
+    },
+    {
+        key: "pbbSpecWhite",
+        label: "PBB Spec (White)",
+    },
+    {
+        key: "pbbRegMusco",
+        label: "PBB Reg (Musco)",
+    },
+    {
+        key: "pbbSpecMusco",
+        label: "PBB Spec (Musco)",
+    },
+    {
+        key: "bibingka",
+        label: "Bibingka",
+    },
+    {
+        key: "pbbOverload",
+        label: "PBB Overload",
+    },
+    {
+        key: "addCheese",
+        label: "Add Cheese",
+    },
+    {
+        key: "addMilk",
+        label: "Add Milk",
+    },
+    {
+        key: "addNiyog",
+        label: "Add Niyog",
+    },
+];
 
 // const products = {
 //   pbbRegWhite: "PBB Reg White",
@@ -63,69 +64,141 @@ const products = [
 // }
 
 export default function Keypad() {
+    const dispatch = useDispatch();
 
-
-// const [modalOpen, setModalOpen] = useState(false);
-
-
-//   const handleOpenModal = (key, modalState) => {
-//     setOpen(true)
-//     dispatch(digitPressed(key))
-//   }
-
-  const digit = (d) => {
-    const foundProduct = products.find((p) => p?.key === d);
-    // console.log("FOUND PRODUCT", foundProduct)
+    const digit = (d, span) => {
+        const foundProduct = products.find((p) => p?.key === d);
+  
+        return (
+            <NumberModal
+                product={foundProduct}
+                onClose={() => setModalOpen(false)}
+                onSubmit={(qty) => console.log("Quantity:", qty)}
+                span={span}
+            />
+        );
+    };
+    const op = (o) => (
+        <button
+            key={o}
+            className="key key--operator"
+            onClick={() => dispatch(operatorPressed(o))}
+        >
+            {o}
+        </button>
+    );
 
     return (
-      
-
-        <NumberModal
-            product={foundProduct}
-            // open={modalOpen}
-            // setOpen={setModalOpen}
-            onClose={() => setModalOpen(false)}
-            onSubmit={(qty) => console.log('Quantity:', qty)}
-            // dispatch={dispatch}
-        />
-   
-  )
-  }
-  const op = (o) => (
-    <button key={o} className="key key--operator" onClick={() => dispatch(operatorPressed(o))}>
-      {o}
-    </button>
-  )
-
-  return (
-    <div
+        <div
         // className="keypad"
-    >
-      <button className="key key--clear" onClick={() => dispatch(clearPressed())}>
-        Clear
-      </button>
-      {op('÷')}
-      <Row style={{display: "block", width: "100%",}}>
-        <Col span={24}>White Sugar</Col>
-        </Row>
-      <Row>
-        <Col span={6}>
-          {digit('pbbRegWhite')}
-        </Col>
-        <Col span={6}>{digit('pbbSpecWhite')}</Col>
-        <Col span={6}>{digit('pbbRegMusco')}</Col>
-        <Col span={6}>{digit('pbbSpecMusco')}</Col>
-      </Row>
-      
-      
-      <div>Muscovado Sugar</div>
-      {digit('4')}{digit('5')}{digit('6')}{op('−')}
-      <div>Bibingka</div>
-      {digit('1')}{digit('2')}{digit('3')}{op('+')}
-      {digit('0')}{digit('.')}
-      <button className="key key--equals" onClick={() => dispatch(equalsPressed())}>
-        =
-      </button>
-    </div>
-  )
+        >
+
+            {/* {op("÷")} */}
+            {/* <Row
+                style={{ display: "block", width: "100%", textAlign: "center" }}
+            >
+                <Col
+                    span={24}
+                    style={{
+                        background: "#566e8f",
+                        padding: "5px 0",
+                        margin: "10px 0",
+                        borderRadius: "10px",
+                    }}
+                >
+                    WHITE SUGAR
+                </Col>
+            </Row> */}
+            <Row gutter={8} style={{ margin: "0.5rem 0" }}>
+                {digit("pbbRegWhite", 12)}
+                {digit("pbbSpecWhite", 12)}
+            </Row>
+            {/* <Row
+                style={{ display: "block", width: "100%", textAlign: "center" }}
+            >
+                <Col
+                    span={24}
+                    style={{
+                        background: "#566e8f",
+                        padding: "5px 0",
+                        margin: "10px 0",
+                        borderRadius: "10px",
+                    }}
+                >
+                    MUSCOVADO SUGAR
+                </Col>
+            </Row> */}
+            <Row gutter={8} style={{ margin: "0.5rem 0" }}>
+                {digit("pbbRegMusco", 12)}
+                {digit("pbbSpecMusco", 12)}
+                {/* {digit('4')}{digit('5')}{digit('6')}{op('−')} */}
+            </Row>
+
+            {/* <Row
+                style={{ display: "block", width: "100%", textAlign: "center" }}
+            >
+                <Col
+                    span={24}
+                    style={{
+                        background: "#566e8f",
+                        padding: "5px 0",
+                        margin: "10px 0",
+                        borderRadius: "10px",
+                    }}
+                >
+                    BIBINGKA & OVERLOAD
+                </Col>
+            </Row> */}
+            <Row gutter={8} style={{ margin: "0.5rem 0" }}>
+                {digit("bibingka", 12)}
+                {digit("pbbOverload", 12)}
+                {/* {digit('4')}{digit('5')}{digit('6')}{op('−')} */}
+            </Row>
+
+            {/* {digit("1")}
+            {digit("2")}
+            {digit("3")}
+            {op("+")}
+            {digit("0")}
+            {digit(".")} */}
+
+            {/* <Row
+                style={{ display: "block", width: "100%", textAlign: "center" }}
+            >
+                <Col
+                    span={24}
+                    style={{
+                        background: "#566e8f",
+                        padding: "5px 0",
+                        margin: "10px 0",
+                        borderRadius: "10px",
+                    }}
+                >
+                    ADD-ONS
+                </Col>
+            </Row> */}
+            <Row gutter={8} style={{ margin: "0.5rem 0" }}>
+                {digit("addCheese", 8)}
+                {digit("addMilk", 8)}
+                {digit("addNiyog", 8)}
+                {/* {digit('4')}{digit('5')}{digit('6')}{op('−')} */}
+            </Row>
+                        <Row>
+                <Col span={24}></Col>
+                <button
+                    style={{ width: "100%" }}
+                    className="key key--clear"
+                    onClick={() => dispatch(clearPressed())}
+                >
+                    Clear
+                </button>
+            </Row>
+            {/* <button
+                className="key key--equals"
+                onClick={() => dispatch(equalsPressed())}
+            >
+                =
+            </button> */}
+        </div>
+    );
 }

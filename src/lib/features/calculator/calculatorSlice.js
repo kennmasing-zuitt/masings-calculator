@@ -51,8 +51,6 @@ const calculatorSlice = createSlice({
   initialState,
   reducers: {
     digitPressed(state, action) {
-      // console.log("digitPressed state:", current(state));
-      // console.log("digitPressed action:", action);
       const digit = action.payload
       if (state.overwrite) {
         state.current = digit === '.' ? '0.' : digit
@@ -66,8 +64,7 @@ const calculatorSlice = createSlice({
 
     operatorPressed: {
       reducer(state, action) {
-        // console.log("operatorPressed state:", current(state));
-        // console.log("operatorPressed action:", action);
+
         const { value: operator, id, createdAt } = action.payload
         if (state.current === 'Error') return
 
@@ -91,8 +88,7 @@ const calculatorSlice = createSlice({
 
     equalsPressed: {
       reducer(state, action) {
-        // console.log("equalsPressed state:", current(state));
-        // console.log("equalsPressed action:", action);
+
         const { id, createdAt } = action.payload
         if (!state.operator || state.previous === null) return
         state.current = runComputation(state, id, createdAt)

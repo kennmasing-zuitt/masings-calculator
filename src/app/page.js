@@ -1,6 +1,6 @@
-import Display from '@/components/Display'
+import Display from '@/components/PbbBbkDisplay'
 import Keypad from '@/components/Keypad'
-import History from '@/components/History'
+import History from '@/components/PbbBbkHistory'
 import PbbBbkKeypad from '@/components/PbbBbkKeypad'
 
 export default function Home() {

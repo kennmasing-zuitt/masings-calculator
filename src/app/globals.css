@@ -69,6 +69,11 @@ body {
 .key--operator { background: #f59e0b; color: #1e293b; }
 .key--equals { background: #22c55e; color: #1e293b; }
 
+.pbb__bbk {
+  font-size: 1rem;
+  /* padd */
+}
+
 .history {
   background: #1e293b;
   border-radius: 24px;

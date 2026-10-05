@@ -1,93 +1,80 @@
 import { createSlice, nanoid, current } from '@reduxjs/toolkit'
+import { isEmpty } from 'lodash'
 
 // 1. What the calculator looks like the very first time it opens
-// const initialState = {
-//   current: '0',     // the big number on the screen
-//   previous: null,   // the number typed before the operator
-//   operator: null,   // '+', '−', '×' or '÷'
-//   overwrite: false, // true = the next digit starts a fresh number
-//   history: [],      // every computation: { id, expression, result, createdAt }
-// }
-
 const initialState = {
     current: null,    // the product selected: '0'
     previous: null,   // the number typed before the operator
-    // operator: null,   // '+', '−', '×' or '÷'
     overwrite: false, // true = the next selection is a new product, if no previous is selected then nothing should be pushed to history
     history: [],      // every computation: { id, expression, result, createdAt }
     quantity: null,
 }
 
-const prices = {
-  pbbRegWhite: 45,
-  pbbSpecWhite: 55,
-  pbbRegMusco: 55,
-  pbbSpecMusco: 65,
-  bibingka: 75,
-  pbbOverload: 85,
-  addCheese: 10,
-  addMilk: 10,
-  addNiyog: 10,
-}
+const products = [
+  {
+    key: "pbbRegWhite",
+    label: "PBB Reg (White)",
+    price: 45,
+  },
+  {
+    key: "pbbSpecWhite",
+    label: "PBB Spec (White)",
+    price: 55,
+  },
+  {
+    key: "pbbRegMusco",
+    label: "PBB Reg (Musco)",
+    price: 55,
+  },
+  {
+    key: "pbbSpecMusco",
+    label: "PBB Spec (Musco)",
+    price: 65
+  },
+  {
+    key: "bibingka",
+    label: "Bibingka",
+    price: 75
+  },
+  {
+    key: "pbbOverload",
+    label: "PBB Overload",
+    price: 85
+  },
+  {
+    key: "addCheese",
+    label: "Add Cheese",
+    price: 10
+  },
+  {
+    key: "addMilk",
+    label: "Add Milk",
+    price: 10
+  },
+  {
+    key: "addNiyog",
+    label: "Add Niyoge",
+    price: 10
+  },
+]
 
 // 2. A plain helper that does the math (no Redux here)
-// function calculate(a, b, operator) {
-//   const x = parseFloat(a)
-//   const y = parseFloat(b)
-//   let result
-//   switch (operator) {
-//     case '+': result = x + y; break
-//     case '−': result = x - y; break
-//     case '×': result = x * y; break
-//     case '÷':
-//       if (y === 0) return 'Error'
-//       result = x / y
-//       break
-//     default: return b
-//   }
-//   // Fix floating-point noise: 0.1 + 0.2 = 0.30000000000000004 -> 0.3
-//   return String(parseFloat(result.toPrecision(12)))
-// }
-
 function calculate(product, quantity) {
   if (!quantity) return;
+  
   const parsedQuantity = parseFloat(quantity);
-  const price = prices[product];
-  if (!price) return 'Error';
-  return (price * parsedQuantity).toFixed(2);
+  const productFound = products.find((p) => p.key === product)
+
+  if (isEmpty(productFound)) return 'Error';
+  return (productFound.price * parsedQuantity).toFixed(2);
 }
 
 // 3. Records one computation into history and puts the result on screen
-// function runComputation(state, id, createdAt) {
-//   const result = calculate(state.previous, state.current, state.operator)
-//   state.history.push({
-//     id,
-//     expression: `${state.previous} ${state.operator} ${state.current}`,
-//     result,
-//     createdAt,
-//   })
-//   return result
-// }
 
-// function runComputation(state, id, createdAt) {
-//   const result = calculate(state.previous, state.current.value);
-  
-//   // console.log("ZZZZZZZ", current(state))
-//   // console.log("RUN COMPUTATION", result)
-
-//   state.history.push({
-//     id,
-//     expression: `${state.previous} x ${state.current.value}`,
-//     result,
-//     createdAt,
-//   })
-//   return result
-// }
 
 // Gives every history entry a unique id and a time stamp.
 // This runs BEFORE the reducer, so the reducer stays "pure".
 const withIdAndTime = (payload) => {
-  // console.log("PAYLOAD", payload)
   return ({
   payload: { value: payload, id: nanoid(), createdAt: new Date().toISOString() },
 })
@@ -100,20 +87,6 @@ const pbbBbkCalculatorSlice = createSlice({
     
     productPressed(state, action) {
       const product = action.payload
-      console.log("PRODUCT XXXX", product)
-      // if (state.overwrite) {
-      //   const productAdded = state.history?.find((h) => h.expression === product)
-      //   state.current = product ===
-      // }
-      // console.log("digitPressed state:", current(state));
-      // if (state.overwrite) {
-      //   state.current = digit === '.' ? '0.' : digit
-      //   state.overwrite = false
-      //   return
-      // }
-      // if (digit === '.' && state.current.includes('.')) return
-      // if (state.current.length >= 16) return
-      // state.current = state.current === '0' && digit !== '.' ? digit : state.current + digit
       state.current = product
     },
 
@@ -123,6 +96,7 @@ const pbbBbkCalculatorSlice = createSlice({
 
         // Accept either a product object ({ key }) or a plain key string
         const productKey = state.current?.key ?? state.current
+        const product = products.find((p) => p.key === productKey);
 
         if (!productKey || !quantity) {
           console.warn('submitPressed skipped:', { productKey, quantity })
@@ -130,17 +104,23 @@ const pbbBbkCalculatorSlice = createSlice({
         }
 
         const result = calculate(productKey, quantity)
+        const existingProduct = state.history.find((p) => p.product === productKey)
 
-        state.history.push({
-          id,
-          product: productKey,
-          quantity: Number(quantity),
-          expression: `${productKey} x ${quantity}`,
-          result,
-          createdAt,
-        })
-
-        console.log('HISTORY', current(state).history) // use current() to log a draft
+        if (isEmpty(existingProduct)) {
+          state.history.push({
+            id,
+            product: productKey,
+            quantity: Number(quantity),
+            expression: `${product.label} x ${quantity}`,
+            result,
+            createdAt,
+          })
+        } else {
+            existingProduct.quantity = Number(quantity);
+            existingProduct.expression = `${product.label} x ${quantity}`;
+            existingProduct.result = result;
+            existingProduct.createdAt = createdAt
+        }
 
         state.current = null
         state.quantity = null
@@ -174,11 +154,9 @@ const pbbBbkCalculatorSlice = createSlice({
 
     equalsPressed: {
       reducer(state, action) {
-        console.log("equalsPressed state:", current(state));
-        // console.log("equalsPressed action:", action);
         const { id, createdAt } = action.payload
         if (!state.quantity || state.previous === null) return
-        // state.current = runComputation(state, id, createdAt)
+        state.current = runComputation(state, id, createdAt)
         state.previous = null
         state.operator = null
         state.overwrite = true
