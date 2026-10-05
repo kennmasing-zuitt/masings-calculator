@@ -1,0 +1,33 @@
+# Dependencies and build output are recreated inside the image
+node_modules
+.next
+out
+build
+
+# Git and editor files
+.git
+.gitignore
+.vscode
+.idea
+*.swp
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files (never bake secrets into an image)
+.env
+.env*.local
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
+nginx.conf
+
+# Docs and AI-assistant notes
+README.md
+AGENTS.md
+CLAUDE.md

@@ -2,7 +2,7 @@ import StoreProvider from './StoreProvider'
 import './globals.css'
 
 export const metadata = {
-  title: 'Redux Calculator',
+  title: `Masing's Calculator`,
   description: 'A calculator that remembers, built with Next.js and Redux Toolkit',
 }
 
