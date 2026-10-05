@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { selectHistory } from "@/lib/features/calculator/pbbBbkCalculatorSlice";
 import { isEmpty } from "lodash";
 
-export default function NumberModal({ product, onClose, onSubmit, span }) {
+export default function NumberModal({ product, onClose, onSubmit, span, btnClass }) {
     const dispatch = useDispatch();
 
     const history = useSelector(selectHistory);
@@ -70,16 +70,34 @@ export default function NumberModal({ product, onClose, onSubmit, span }) {
         });
     }, [productFound]);
 
+    const splitLabel = product?.label.split(" ")
+    console.log("SPLIT LABEL", splitLabel)
+    let finalLabel = product?.label
+    if (splitLabel.length === 2) {
+        finalLabel = product?.label
+    } else if (splitLabel.length === 3) {
+        finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{splitLabel[2]}</p>
+        </>)
+    } else if (splitLabel.length === 6) {
+               finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]}`}</p>
+        </>)
+    }
+
+
     return (
         <>
             <Col span={span}>
                 <button
                     style={{ width: "100%" }}
                     key={product?.key}
-                    className="key pbb__bbk"
+                    className={`key ${btnClass ? btnClass : ""}`}
                     onClick={() => handleClickProductButton(product?.key)}
                 >
-                    {product?.label}
+                    {finalLabel}
                 </button>
             </Col>
 

@@ -11,51 +11,76 @@ const initialState = {
 }
 
 const products = [
-  {
-    key: "pbbRegWhite",
-    label: "PBB Reg (White)",
-    price: 45,
-  },
-  {
-    key: "pbbSpecWhite",
-    label: "PBB Spec (White)",
-    price: 55,
-  },
-  {
-    key: "pbbRegMusco",
-    label: "PBB Reg (Musco)",
-    price: 55,
-  },
-  {
-    key: "pbbSpecMusco",
-    label: "PBB Spec (Musco)",
-    price: 65
-  },
-  {
-    key: "bibingka",
-    label: "Bibingka",
-    price: 75
-  },
-  {
-    key: "pbbOverload",
-    label: "PBB Overload",
-    price: 85
-  },
-  {
-    key: "addCheese",
-    label: "Add Cheese",
-    price: 10
-  },
-  {
-    key: "addMilk",
-    label: "Add Milk",
-    price: 10
-  },
-  {
-    key: "addNiyog",
-    label: "Add Niyoge",
-    price: 10
-  },
+    {
+        key: "pbbRegWhite",
+        label: "PBB Regular (White)",
+        price: 45
+    },
+    {
+        key: "pbbSpecWhite",
+        label: "PBB Special (White)",
+        price: 55
+    },
+    {
+        key: "pbbRegMusco",
+        label: "PBB Regular (Musco)",
+        price: 55
+    },
+    {
+        key: "pbbSpecMusco",
+        label: "PBB Special (Musco)",
+        price: 65
+    },
+    {
+        key: "bibingka",
+        label: "Bibingka",
+        price: 75
+    },
+    {
+        key: "pbbRegWhiteLecheFlan",
+        label: "PBB Regular (White - Leche Flan)",
+        price: 65
+    },
+    {
+        key: "pbbSpecWhiteLecheFlan",
+        label: "PBB Special (White - Leche Flan)",
+        price: 75
+    },
+    {
+        key: "pbbRegMuscoLecheFlan",
+        label: "PBB Regular (Musco - Leche Flan)",
+        price: 75
+    },
+    {
+        key: "pbbSpecMuscoLecheFlan",
+        label: "PBB Special (Musco - Leche Flan)",
+        price: 85
+    },
+    {
+        key: "pbbOverloadWhite",
+        label: "PBB Overload (White)",
+        price: 85
+    },
+    {
+        key: "pbbOverloadMusco",
+        label: "PBB Overload (Musco)",
+        price: 95
+    },
+    {
+        key: "addCheese",
+        label: "Add Cheese",
+        price: 10
+    },
+    {
+        key: "addMilk",
+        label: "Add Milk",
+        price: 10
+    },
+    {
+        key: "addNiyog",
+        label: "Add Niyog",
+        price: 10
+    },
 ]
 
 // 2. A plain helper that does the math (no Redux here)

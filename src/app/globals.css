@@ -71,7 +71,21 @@ body {
 
 .pbb__bbk {
   font-size: 1rem;
-  /* padd */
+}
+
+.pbb__white {
+  font-size: 1rem;
+    background: #6600ff;
+}
+
+.pbb__musco {
+  font-size: 1rem;
+    background: #802b00;
+}
+
+.bbk {
+    font-size: 1rem;
+    background: #808000;
 }
 
 .history {
