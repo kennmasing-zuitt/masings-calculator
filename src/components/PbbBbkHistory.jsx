@@ -53,7 +53,7 @@ export default function History() {
                                                 okText="Yes"
                                                 cancelText="No"
                                             >
-                                                <Button type="link" >
+                                                <Button type="link">
                                                     <MinusCircleTwoTone twoToneColor="#eb2f96" />
                                                 </Button>
                                             </Popconfirm>

@@ -12,7 +12,13 @@ import { useSelector } from "react-redux";
 import { selectHistory } from "@/lib/features/calculator/pbbBbkCalculatorSlice";
 import { isEmpty } from "lodash";
 
-export default function NumberModal({ product, onClose, onSubmit, span, btnClass }) {
+export default function NumberModal({
+    product,
+    onClose,
+    onSubmit,
+    span,
+    btnClass,
+}) {
     const dispatch = useDispatch();
 
     const history = useSelector(selectHistory);
@@ -67,42 +73,117 @@ export default function NumberModal({ product, onClose, onSubmit, span, btnClass
         });
     }, [productFound]);
 
-    const splitLabel = product?.label.split(" ")
-    let finalLabel = <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>
+    const splitLabel = product?.label.split(" ");
+    let finalLabel = (
+        <p
+            style={{
+                fontSize: "1rem",
+                padding: "0",
+                margin: "0",
+                fontWeight: "600",
+            }}
+        >
             {product?.label}
         </p>
+    );
 
-    if (splitLabel?.length === 2 &&  ["pbb__white", "pbb__musco"].includes(btnClass)) {
-        <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>
-            {finalLabel = product?.label}
-        </p>
+    if (
+        splitLabel?.length === 2 &&
+        ["pbb__white", "pbb__musco"].includes(btnClass)
+    ) {
+        <p
+            style={{
+                fontSize: "1rem",
+                padding: "0",
+                margin: "0",
+                fontWeight: "600",
+            }}
+        >
+            {(finalLabel = product?.label)}
+        </p>;
     } else if (splitLabel?.length === 2 && ["bbq", "bbk"].includes(btnClass)) {
-               finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{splitLabel[0]}</p>
-             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{splitLabel[1]}</p>
-        </>)
+        finalLabel = (
+            <>
+                <p
+                    style={{
+                        fontSize: "1rem",
+                        padding: "0",
+                        margin: "0",
+                        fontWeight: "600",
+                    }}
+                >
+                    {splitLabel[0]}
+                </p>
+                <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>
+                    {splitLabel[1]}
+                </p>
+            </>
+        );
     } else if (splitLabel?.length === 3) {
-        finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
-             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{splitLabel[2]}</p>
-        </>)
+        finalLabel = (
+            <>
+                <p
+                    style={{
+                        fontSize: "1rem",
+                        padding: "0",
+                        margin: "0",
+                        fontWeight: "600",
+                    }}
+                >{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+                <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>
+                    {splitLabel[2]}
+                </p>
+            </>
+        );
     } else if ([5].includes(splitLabel?.length)) {
-        finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
-             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]}`}</p>
-        </>)
+        finalLabel = (
+            <>
+                <p
+                    style={{
+                        fontSize: "1rem",
+                        padding: "0",
+                        margin: "0",
+                        fontWeight: "600",
+                    }}
+                >{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+                <p
+                    style={{ fontSize: ".8rem", padding: "0", margin: "0" }}
+                >{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]}`}</p>
+            </>
+        );
     } else if ([6].includes(splitLabel?.length)) {
-        finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
-             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]}`}</p>
-        </>)
+        finalLabel = (
+            <>
+                <p
+                    style={{
+                        fontSize: "1rem",
+                        padding: "0",
+                        margin: "0",
+                        fontWeight: "600",
+                    }}
+                >{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+                <p
+                    style={{ fontSize: ".8rem", padding: "0", margin: "0" }}
+                >{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]}`}</p>
+            </>
+        );
     } else if ([8].includes(splitLabel?.length)) {
-        finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
-             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]} ${splitLabel[6]} ${splitLabel[7]}`}</p>
-        </>)
+        finalLabel = (
+            <>
+                <p
+                    style={{
+                        fontSize: "1rem",
+                        padding: "0",
+                        margin: "0",
+                        fontWeight: "600",
+                    }}
+                >{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+                <p
+                    style={{ fontSize: ".8rem", padding: "0", margin: "0" }}
+                >{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]} ${splitLabel[6]} ${splitLabel[7]}`}</p>
+            </>
+        );
     }
-
 
     return (
         <>
