@@ -6,9 +6,6 @@ import { Button, Modal, Form, InputNumber, message, Col } from "antd";
 import { useDispatch } from "react-redux";
 import {
     productPressed,
-    operatorPressed,
-    equalsPressed,
-    clearPressed,
     submitPressed,
 } from "@/lib/features/calculator/pbbBbkCalculatorSlice";
 import { useSelector } from "react-redux";
@@ -71,19 +68,38 @@ export default function NumberModal({ product, onClose, onSubmit, span, btnClass
     }, [productFound]);
 
     const splitLabel = product?.label.split(" ")
-    console.log("SPLIT LABEL", splitLabel)
-    let finalLabel = product?.label
-    if (splitLabel.length === 2) {
-        finalLabel = product?.label
-    } else if (splitLabel.length === 3) {
+    let finalLabel = <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>
+            {product?.label}
+        </p>
+
+    if (splitLabel?.length === 2 &&  ["pbb__white", "pbb__musco"].includes(btnClass)) {
+        <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>
+            {finalLabel = product?.label}
+        </p>
+    } else if (splitLabel?.length === 2 && ["bbq", "bbk"].includes(btnClass)) {
+               finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{splitLabel[0]}</p>
+             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{splitLabel[1]}</p>
+        </>)
+    } else if (splitLabel?.length === 3) {
         finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
              <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{splitLabel[2]}</p>
         </>)
-    } else if (splitLabel.length === 6) {
-               finalLabel = (<>
-             <p style={{ fontSize: "1rem", padding: "0", margin: "0" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+    } else if ([5].includes(splitLabel?.length)) {
+        finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]}`}</p>
+        </>)
+    } else if ([6].includes(splitLabel?.length)) {
+        finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
              <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]}`}</p>
+        </>)
+    } else if ([8].includes(splitLabel?.length)) {
+        finalLabel = (<>
+             <p style={{ fontSize: "1rem", padding: "0", margin: "0", fontWeight: "600" }}>{`${splitLabel[0]} ${splitLabel[1]}`}</p>
+             <p style={{ fontSize: ".8rem", padding: "0", margin: "0" }}>{`${splitLabel[2]} ${splitLabel[3]} ${splitLabel[4]} ${splitLabel[5]} ${splitLabel[6]} ${splitLabel[7]}`}</p>
         </>)
     }
 
@@ -126,7 +142,6 @@ export default function NumberModal({ product, onClose, onSubmit, span, btnClass
                             min={0}
                             style={{ width: "100%" }}
                             className={`defaultValue ${isEmpty(productFound) ? value : ""}`}
-                            // placeholder={isEmpty(productFound) ? "e.g. 10" : productFound.quantity}
                             placeholder="e.g. 10"
                         />
                     </Form.Item>

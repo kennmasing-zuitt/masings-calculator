@@ -15,63 +15,63 @@ import { useDispatch } from "react-redux";
 const products = [
     {
         key: "pbbRegWhite",
-        label: "PBB Regular (White)",
+        label: "PBB Regular (White - 45)",
     },
     {
         key: "pbbSpecWhite",
-        label: "PBB Special (White)",
+        label: "PBB Special (White. - 55)",
     },
     {
         key: "pbbRegMusco",
-        label: "PBB Regular (Musco)",
+        label: "PBB Regular (Musco - 55)",
     },
     {
         key: "pbbSpecMusco",
-        label: "PBB Special (Musco)",
+        label: "PBB Special (Musco - 65)",
     },
     {
         key: "bibingka",
-        label: "Bibingka",
+        label: "Bibingka (75)",
     },
     {
         key: "pbbRegWhiteLecheFlan",
-        label: "PBB Regular (White - Leche Flan)",
+        label: "PBB Regular (White - Leche Flan - 65)",
     },
     {
         key: "pbbSpecWhiteLecheFlan",
-        label: "PBB Special (White - Leche Flan)",
+        label: "PBB Special (White - Leche Flan - 75)",
     },
     {
         key: "pbbRegMuscoLecheFlan",
-        label: "PBB Regular (Musco - Leche Flan)",
+        label: "PBB Regular (Musco - Leche Flan - 75)",
     },
     {
         key: "pbbSpecMuscoLecheFlan",
-        label: "PBB Special (Musco - Leche Flan)",
+        label: "PBB Special (Musco - Leche Flan - 85)",
     },
     {
         key: "pbbOverloadWhite",
-        label: "PBB Overload (White)",
+        label: "PBB Overload (White - 85)",
     },
     {
         key: "pbbOverloadMusco",
-        label: "PBB Overload (Musco)",
+        label: "PBB Overload (Musco - 95)",
     },
     {
         key: "addCheese",
-        label: "Add Cheese",
+        label: "Add Cheese (10)",
     },
     {
         key: "addMilk",
-        label: "Add Milk",
+        label: "Add Milk (10)",
     },
     {
         key: "addNiyog",
-        label: "Add Niyog",
+        label: "Add Niyog (10)",
     },
 ];
 
-export default function Keypad() {
+export default function PbbBbkKeypad() {
     const dispatch = useDispatch();
 
     const digit = (d, span, btnClass) => {

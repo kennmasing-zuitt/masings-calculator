@@ -10,7 +10,7 @@ const initialState = {
     quantity: null,
 }
 
-const products = [
+const pbbBbkProducts = [
     {
         key: "pbbRegWhite",
         label: "PBB Regular (White)",
@@ -83,12 +83,102 @@ const products = [
     },
 ]
 
+const bbqProducts = [
+    {
+        key: "isawManok",
+        label: "Isaw Manok",
+        price: 10
+    },
+    {
+        key: "bbq",
+        label: "BBQ",
+        price: 25
+    },
+    {
+        key: "bulaklak",
+        label: "Bulaklak",
+        price: 25
+    },
+    {
+        key: "atay",
+        label: "Atay",
+        price: 25
+    },
+    {
+        key: "dugo",
+        label: "Dugo",
+        price: 15
+    },
+    {
+        key: "isawC",
+        label: "Isaw-C",
+        price: 25
+    },
+    {
+        key: "balat",
+        label: "Balat",
+        price: 15
+    },
+    {
+        key: "tito",
+        label: "Tito",
+        price: 25
+    },
+    {
+        key: "tenga",
+        label: "Tenga",
+        price: 25
+    },
+    {
+        key: "haba",
+        label: "Haba",
+        price: 25
+    },
+    {
+        key: "hotdog",
+        label: "Hotdog",
+        price: 25
+    },
+    {
+        key: "bato",
+        label: "Bato",
+        price: 25
+    },
+    {
+        key: "bilog",
+        label: "Bilog",
+        price: 25
+    },
+    {
+        key: "ulo",
+        label: "Ulo",
+        price: 25
+    },
+    {
+        key: "bolaBola",
+        label: "Bola2x",
+        price: 3
+    },
+    {
+        key: "shanghai",
+        label: "Shanghai",
+        price: 4
+    },
+    {
+        key: "puwet",
+        label: "Puwet",
+        price: 25
+    },
+];
+
+const allProducts = pbbBbkProducts.concat(bbqProducts)
+
 // 2. A plain helper that does the math (no Redux here)
 function calculate(product, quantity) {
   if (!quantity) return;
   
   const parsedQuantity = parseFloat(quantity);
-  const productFound = products.find((p) => p.key === product)
+  const productFound = allProducts.find((p) => p.key === product)
 
   if (isEmpty(productFound)) return 'Error';
   return (productFound.price * parsedQuantity).toFixed(2);
@@ -121,7 +211,7 @@ const pbbBbkCalculatorSlice = createSlice({
 
         // Accept either a product object ({ key }) or a plain key string
         const productKey = state.current?.key ?? state.current
-        const product = products.find((p) => p.key === productKey);
+        const product = allProducts.find((p) => p.key === productKey);
 
         if (quantity === 0) {
             const index = state.history.findIndex((h) => h.product === productKey);
@@ -195,6 +285,14 @@ const pbbBbkCalculatorSlice = createSlice({
       prepare: () => withIdAndTime(null),
     },
 
+    deleteItemPressed: {
+     reducer(state, action) {
+        const { id } = action.payload;
+        const index = state.history.findIndex((h) => h.id === id);
+        state.history.splice(index,1)    
+      },
+    },
+
     // Puts back the state we saved in localStorage (runs once, in the browser)
     stateRestored(state, action) {
       return { ...initialState, ...action.payload }
@@ -207,7 +305,7 @@ const pbbBbkCalculatorSlice = createSlice({
   },
 })
 
-export const { productPressed, operatorPressed, equalsPressed, stateRestored, clearPressed, submitPressed } =
+export const { productPressed, operatorPressed, equalsPressed, stateRestored, clearPressed, submitPressed, deleteItemPressed } =
   pbbBbkCalculatorSlice.actions
 export default pbbBbkCalculatorSlice.reducer
 
