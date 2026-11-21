@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // Build a small, self-contained server in .next/standalone for Docker
+  output: "standalone",
 };
 
 export default nextConfig;
